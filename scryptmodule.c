@@ -3,34 +3,8 @@
 #include "scrypt.h"
 
 static unsigned char getNfactor(char* blockheader) {
-    int n,l = 0;
-    unsigned long nTimestamp = *(unsigned int*)(&blockheader[68]);
-    unsigned char minNfactor = 10;
-    unsigned char maxNfactor = 30;
-    unsigned char N;
-    uint64_t s;
-
-    if (nTimestamp <= 1389306217) {
-        return minNfactor;
-    }
-
-    s = nTimestamp - 1389306217;
-    while ((s >> 1) > 3) {
-      l += 1;
-      s >>= 1;
-    }
-
-    s &= 3;
-
-    n = (l * 158 + s * 28 - 2670) / 100;
-
-    if (n < 0) n = 0;
-
-    N = (unsigned char) n;
-    n = N > minNfactor ? N : minNfactor;
-    N = n < maxNfactor ? n : maxNfactor;
-
-    return N;
+    unsigned char TheNfactor = 5;
+    return TheNfactor;
 }
 
 static PyObject *scrypt_getpowhash(PyObject *self, PyObject *args)
